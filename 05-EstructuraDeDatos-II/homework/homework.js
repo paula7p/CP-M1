@@ -11,8 +11,77 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
 function LinkedList() {}
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.length = 0;
+  }
+
+  add(value) {
+    const newNode = { value, next: null };
+    if (!this.head) {
+      this.head = newNode;
+    } else {
+      let current = this.head;
+      while (current.next) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
+    this.length++;
+  }
+
+  remove() {
+    if (!this.head) {
+      return null;
+    }
+    let deletedValue;
+    if (!this.head.next) {
+      deletedValue = this.head.value;
+      this.head = null;
+    } else {
+      let current = this.head;
+      while (current.next.next) {
+        current = current.next;
+      }
+      deletedValue = current.next.value;
+      current.next = null;
+    }
+    this.length--;
+    return deletedValue;
+  }
+
+  search(param) {
+    if (!this.head) {
+      return null;
+    }
+    let callback;
+    if (typeof param === 'function') {
+      callback = param;
+    } else {
+      callback = value => value === param;
+    }
+    let current = this.head;
+    while (current) {
+      if (callback(current.value)) {
+        return current.value;
+      }
+      current = current.next;
+    }
+    return null;
+  }
+}
+const list = new LinkedList();
+list.add(1);
+list.add(2);
+list.add(3);
+console.log(list.search(3)); 
+
 
 function Node(value) {}
+this.value = value;
+this.next = null;
+
 
 /* EJERCICIO 2
 Implementar la clase HashTable.
@@ -28,6 +97,33 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 function HashTable() {}
+class HashTable {
+  constructor() {
+    this.numBuckets = 35;
+    this.buckets = new Array(this.numBuckets);
+  }
+
+  // Métodos get, hasKey aquí...
+  hash(key) {
+    let sum = 0;
+    for (let i = 0; i < key.length; i++) {
+      sum += key.charCodeAt(i);
+    }
+    return sum % this.numBuckets;
+  }
+  set(key, value) {
+    const index = this.hash(key);
+    if (!this.buckets[index]) {
+      this.buckets[index] = [];
+    }
+    const bucket = this.buckets
+
+  }
+
+  
+
+    
+
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
